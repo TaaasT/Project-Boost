@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    
+    Rigidbody rigidBody;
+
     void Start()
     {
-        
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     
@@ -21,7 +22,7 @@ public class Rocket : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-
+            rigidBody.AddRelativeForce(Vector3.up);
         }
         
         if(Input.GetKey(KeyCode.A))
