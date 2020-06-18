@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 public class Rocket : MonoBehaviour
@@ -27,11 +28,11 @@ public class Rocket : MonoBehaviour
         
         if(Input.GetKey(KeyCode.A))
         {
-
+            transform.Rotate(Vector3.forward);
         }
         else if(Input.GetKey(KeyCode.D))
         {
-
+            transform.Rotate(-Vector3.forward);
         }
     }
 }
