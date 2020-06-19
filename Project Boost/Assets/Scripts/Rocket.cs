@@ -7,10 +7,12 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     Rigidbody rigidBody;
+    AudioSource audioSource;
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     
@@ -24,9 +26,17 @@ public class Rocket : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             rigidBody.AddRelativeForce(Vector3.up);
+            if(!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
         }
-        
-        if(Input.GetKey(KeyCode.A))
+        else
+        {
+            audioSource.Stop();
+        }
+
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.forward);
         }
