@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Timeline;
+﻿using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
@@ -73,8 +71,13 @@ public class Rocket : MonoBehaviour
             case "Friendly":
                 Debug.Log("OK");
                 break;
+            case "Finish":
+                Debug.Log("Hit finish");
+                SceneManager.LoadScene(1);
+                break;
             default:
                 Debug.Log("Dead");
+                SceneManager.LoadScene(0);
                 break;
         }
     }
