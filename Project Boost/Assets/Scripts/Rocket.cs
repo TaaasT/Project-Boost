@@ -8,6 +8,8 @@ public class Rocket : MonoBehaviour
     float rcsThrust = 100f;
     [SerializeField]
     float mainThrust = 100f;
+    [SerializeField]
+    AudioClip mainEngine, death, Success;
 
     Rigidbody rigidBody;
     AudioSource audioSource;
@@ -32,11 +34,11 @@ public class Rocket : MonoBehaviour
 
     private void ProcessInput()
     {
-        Thrust();
-        Rotate();
+        RespondToThrustInput();
+        RespondToRotateInput();
     }
 
-    private void Rotate()
+    private void RespondToRotateInput()
     {
         rigidBody.freezeRotation = true;
         
@@ -54,19 +56,24 @@ public class Rocket : MonoBehaviour
         rigidBody.freezeRotation = false;
     }
 
-    private void Thrust()
+    private void RespondToThrustInput()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
+            ApplyThrust();
         }
         else
         {
             audioSource.Stop();
+        }
+    }
+
+    private void ApplyThrust()
+    {
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(mainEngine);
         }
     }
 
@@ -81,11 +88,14 @@ public class Rocket : MonoBehaviour
                 break;
             case "Finish":
                 state = State.Trancending;
-                Invoke("LoadNextLevel", 1f);
+                audioSource.PlayOneShot(Success);
+                Invoke("LoadNextLevel", 1.5f);
                 break;
             default:
                 state = State.Dying;
-                Invoke("LoadFirstLevel", 1f);
+                audioSource.Stop();
+                audioSource.PlayOneShot(death);
+                Invoke("LoadFirstLevel", 1.5f);
                 break;
         }
     }
