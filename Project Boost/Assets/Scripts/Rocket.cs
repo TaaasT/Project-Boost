@@ -87,17 +87,27 @@ public class Rocket : MonoBehaviour
                 
                 break;
             case "Finish":
-                state = State.Trancending;
-                audioSource.PlayOneShot(Success);
-                Invoke("LoadNextLevel", 1.5f);
+                StartSuccessSequence();
                 break;
             default:
-                state = State.Dying;
-                audioSource.Stop();
-                audioSource.PlayOneShot(death);
-                Invoke("LoadFirstLevel", 1.5f);
+                StartDeathSequence();
                 break;
         }
+    }
+
+    private void StartSuccessSequence()
+    {
+        state = State.Trancending;
+        audioSource.PlayOneShot(Success);
+        Invoke("LoadNextLevel", 1.5f);
+    }
+
+    private void StartDeathSequence()
+    {
+        state = State.Dying;
+        audioSource.Stop();
+        audioSource.PlayOneShot(death);
+        Invoke("LoadFirstLevel", 1.5f);
     }
 
     void LoadFirstLevel()
