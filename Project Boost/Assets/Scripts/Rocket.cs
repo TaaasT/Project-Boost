@@ -38,7 +38,11 @@ public class Rocket : MonoBehaviour
             ProcessInput();
         }
 
-        RespondToDebugKeys();
+        if(Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();
+        }
+        
     }
 
     private void ProcessInput()
