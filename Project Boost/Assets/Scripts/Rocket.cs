@@ -140,14 +140,14 @@ public class Rocket : MonoBehaviour
     void LoadNextLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-
         int nextSceneIndex = currentSceneIndex + 1;
-        SceneManager.LoadScene(nextSceneIndex);
-        
-        if (currentSceneIndex == 3)
+
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(0);
+            nextSceneIndex = 0;
         }
+
+        SceneManager.LoadScene(nextSceneIndex);
 
     }
 
