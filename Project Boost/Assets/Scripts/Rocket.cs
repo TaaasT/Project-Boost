@@ -20,9 +20,7 @@ public class Rocket : MonoBehaviour
     AudioSource audioSource;
 
     bool CollisionsDisabled = false;
-
-    enum State { Alive, Dying, Trancending }
-    State state = State.Alive;
+    bool isTransitioning = false;
 
     void Start()
     {
@@ -33,7 +31,7 @@ public class Rocket : MonoBehaviour
     
     void Update()
     {
-        if(state == State.Alive)
+        if(!isTransitioning)
         {
             ProcessInput();
         }
@@ -98,7 +96,7 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if(state != State.Alive || CollisionsDisabled) {return;}
+        if(isTransitioning || CollisionsDisabled) {return;}
 
         switch(other.gameObject.tag)
         {
@@ -116,7 +114,7 @@ public class Rocket : MonoBehaviour
 
     private void StartSuccessSequence()
     {
-        state = State.Trancending;
+        isTransitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(Success);
         sucessParticles.Play();
@@ -125,7 +123,7 @@ public class Rocket : MonoBehaviour
 
     private void StartDeathSequence()
     {
-        state = State.Dying;
+        isTransitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(death);
         DeathParticles.Play();
