@@ -51,8 +51,8 @@ public class Rocket : MonoBehaviour
 
     private void RespondToRotateInput()
     {
-        rigidBody.freezeRotation = true;
-        
+        rigidBody.angularVelocity = Vector3.zero;
+
         float rotationThisFrame = rcsThrust * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.A))
@@ -64,7 +64,6 @@ public class Rocket : MonoBehaviour
             transform.Rotate(-Vector3.forward * rotationThisFrame);
         }
 
-        rigidBody.freezeRotation = false;
     }
 
     private void RespondToThrustInput()
@@ -75,9 +74,14 @@ public class Rocket : MonoBehaviour
         }
         else
         {
-            audioSource.Stop();
-            mainEngineParticle.Stop();
+            StopApplyingThrist();
         }
+    }
+
+    private void StopApplyingThrist()
+    {
+        audioSource.Stop();
+        mainEngineParticle.Stop();
     }
 
     private void ApplyThrust()
